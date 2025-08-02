@@ -1,0 +1,17 @@
+name: PHP Preview Deploy
+
+on:
+  push:
+    branches:
+      - develop
+    paths:
+      - 'src/**'
+      - '.github/workflows/php.preview-deploy.yaml'
+
+jobs:
+  sample:
+    name: Hello World
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "Hello World"
