@@ -1,136 +1,156 @@
-# 簡単な計算アプリ
+# 計算アプリケーション
 
-PHP で作成された簡単な計算アプリケーションです。基本的な四則演算（加算、減算、乗算、除算）を行うことができます。
+シンプルな四則演算を行うWebアプリケーションです。計算結果はデータベースに保存され、静的解析とユニットテストによる品質管理が実装されています。
 
-## 必要な環境
+## 🚀 機能
 
-- PHP 7.4 以上
-- Web ブラウザ
+- **四則演算**: 加算、減算、乗算、除算
+- **データベース保存**: 計算結果をMySQLに保存
+- **環境変数管理**: `.env`ファイルによる設定管理
+- **静的解析**: PHPStanによるコード品質チェック
+- **ユニットテスト**: PHPUnitによるテスト自動化
+- **CI/CD**: GitHub Actionsによる自動テスト実行
 
-## セットアップと起動
+## 📋 必要条件
+
+- PHP 8.3以上
+- MySQL 8.0以上
+- Composer
+- Docker（推奨）
+
+## 🛠️ インストール
 
 ### 1. リポジトリのクローン
-
 ```bash
 git clone <repository-url>
-cd github_actions_php
+cd calculete-develop
 ```
 
-### 2. PHP サーバーの起動
-
+### 2. 依存関係のインストール
 ```bash
-php -S localhost:8000 -t .
+composer install
 ```
 
-**重要**: `-t .` オプションを必ず指定してください。これにより現在のディレクトリ全体がドキュメントルートとして設定され、すべてのファイルにアクセスできるようになります。
+### 3. 環境変数の設定
+```bash
+# .envファイルを作成
+cp .env.example .env
 
-### 3. ブラウザでアクセス
+# 環境変数を編集
+MYSQL_HOST=mysql
+MYSQL_ROOT_PASSWORD=rootのパスワード
+MYSQL_DATABASE=php-docker-db
+MYSQL_USER=admin
+MYSQL_PASSWORD=adminのパスワード
+```
+
+### 4. データベースのセットアップ
+```sql
+CREATE DATABASE calculation_db;
+USE calculation_db;
+
+CREATE TABLE calculations (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    result DECIMAL(10,2) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+```
+
+## 🐳 Dockerを使用した実行
+
+### 1. Docker Composeで起動
+```bash
+docker-compose up -d
+```
+
+### 2. アプリケーションにアクセス
+```
+http://localhost:8080
+```
+
+## 🧪 テスト実行
+
+### ユニットテスト
+```bash
+# 全テストを実行
+./vendor/bin/phpunit
+
+# 特定のテストファイルを実行
+./vendor/bin/phpunit tests/CalculatorTest.php
+
+# カバレッジ付きで実行
+./vendor/bin/phpunit --coverage-html coverage
+```
+
+### 静的解析
+```bash
+# PHPStanによる静的解析
+composer phpstan
+```
+
+## 📁 プロジェクト構造
 
 ```
-http://localhost:8000
-```
-
-## アプリの使用方法
-
-### 基本的な計算手順
-
-1. **数値の入力**
-
-   - 「最初の数値」フィールドに計算したい数値を入力
-   - 「次の数値」フィールドに計算したい数値を入力
-
-2. **演算子の選択**
-
-   - ドロップダウンメニューから演算子を選択
-   - 利用可能な演算子：
-     - `+` (加算)
-     - `-` (減算)
-     - `×` (乗算)
-     - `÷` (除算)
-
-3. **計算の実行**
-
-   - 「計算」ボタンをクリック
-   - 計算結果が新しいページに表示されます
-
-4. **結果の確認**
-   - 計算結果が表示されます
-   - 「戻る」リンクをクリックしてメインページに戻ることができます
-
-### 計算例
-
-- **加算**: 5 + 3 = 8
-- **減算**: 10 - 4 = 6
-- **乗算**: 6 × 7 = 42
-- **除算**: 15 ÷ 3 = 5
-
-### エラーハンドリング
-
-- **0 での除算**: 0 で割ろうとすると「エラー: 0 で割ることはできません」が表示されます
-- **無効な入力**: 数値以外の入力や空の入力は自動的に検証されます
-
-## ファイル構成
-
-```
-github_actions_php/
-├── index.php          # メインページ（計算フォーム）
-├── calculate.php      # 計算処理を行うファイル
+calculete-develop/
+├── .github/
+│   └── workflows/
+│       ├── phpstan.yaml    # PHPStan CI/CD
+│       └── phpunit.yaml    # PHPUnit CI/CD
 ├── src/
-│   └── Calculator.php # 計算ロジックを含むクラス
-└── README.md          # このファイル
+│   ├── class/
+│   │   ├── calculator.php      # 計算ロジック
+│   │   └── calculationDB.php   # データベース操作
+│   ├── calculate.php           # 計算処理
+│   └── index.php              # メインページ
+├── tests/
+│   └── CalculatorTest.php     # ユニットテスト
+├── vendor/                    # Composer依存関係
+├── .env                       # 環境変数
+├── composer.json              # 依存関係定義
+├── phpstan.neon              # PHPStan設定
+├── phpunit.xml               # PHPUnit設定
+└── README.md                 # このファイル
 ```
 
-## 技術仕様
+## 🚀 CI/CD
 
-- **フロントエンド**: HTML5
-- **バックエンド**: PHP 7.4+
-- **アーキテクチャ**: MVC 風の構造
-  - `index.php`: ビュー（フォーム表示）
-  - `calculate.php`: コントローラー（リクエスト処理）
-  - `Calculator.php`: モデル（計算ロジック）
+### GitHub Actions
 
-## トラブルシューティング
+#### PHPStanワークフロー
+- **トリガー**: `develop`ブランチへのプッシュ/プルリクエスト
+- **実行**: 静的解析によるコード品質チェック
+- **結果**: エラーがある場合、プルリクエストのマージをブロック
 
-### よくある問題
+#### PHPUnitワークフロー
+- **トリガー**: `develop`ブランチへのプルリクエスト
+- **実行**: ユニットテストの自動実行
+- **結果**: テスト失敗時、プルリクエストのマージをブロック
 
-1. **計算ボタンを押しても何も変化がない**
+## 🔍 品質管理
 
-   - PHP サーバーが正しく起動されているか確認
-   - `-t .` オプションが指定されているか確認
+### 静的解析
+- **PHPStan**: 型安全性とコード品質のチェック
+- **エラーレベル**: 10
+- **対象**: `src/`ディレクトリ
 
-2. **ファイルが見つからないエラー**
+### テストカバレッジ
+- **PHPUnit**: ユニットテストの実行
+- **カバレッジ**: HTMLレポート生成
+- **対象**: `src/`ディレクトリ
 
-   - 現在のディレクトリでサーバーを起動しているか確認
-   - ファイルパスが正しいか確認
+## 📝 開発ガイドライン
 
-3. **計算結果が表示されない**
-   - ブラウザのキャッシュをクリア
-   - 開発者ツールでエラーを確認
+### コード品質
+- PHPStanレベル10を維持
+- 型安全性を重視
+- エラーハンドリングを適切に実装
 
-### サーバーの停止
+### テスト
+- 新機能追加時はテストケースを作成
+- カバレッジを維持
+- エッジケースもテスト
 
-```bash
-# ターミナルで Ctrl+C を押す
-# または
-pkill -f "php -S"
-```
-
-## 開発者向け情報
-
-### デバッグ
-
-エラーが発生した場合は、`calculate.php`の先頭でエラー表示が有効になっています：
-
-```php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-```
-
-### 機能拡張
-
-新しい演算子を追加する場合は、`src/Calculator.php`の`calculate`メソッドを編集してください。
-
-## ライセンス
-
-このプロジェクトは MIT ライセンスの下で公開されています。
+### コミット
+- 意味のあるコミットメッセージ
+- 小さな変更を頻繁にコミット
+- プルリクエストでレビュー
