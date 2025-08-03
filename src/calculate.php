@@ -17,7 +17,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $result = $calculator->calculate($num1, $num2, $operation);
             $calculationDB = new CalculationDB();
             $db = $calculationDB->connectDB();
-            var_dump($db);
             $calculationDB->insert($result, $db);
 
             echo "<h1>計算結果</h1>";
