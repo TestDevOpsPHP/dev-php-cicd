@@ -3,11 +3,11 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>簡単な計算アプリ</title>
+  <title>計算アプリ</title>
 </head>
 
 <body>
-  <h1>簡単な計算アプリ</h1>
+  <h1>計算アプリ</h1>
   <form action="calculate.php" method="post">
     <input type="number" name="num1" placeholder="最初の数値" required>
     <select name="operation">
