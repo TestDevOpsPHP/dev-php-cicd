@@ -19,5 +19,4 @@ jobs:
       with:
         version: "^12.3"
         php_version: 8.3
-        path: tests/
         configuration: phpunit.xml
