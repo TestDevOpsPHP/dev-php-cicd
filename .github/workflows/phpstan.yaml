@@ -20,5 +20,5 @@ jobs:
           version: "^2.1"
           php_version: 8.3
           path: src/
-          configuration: ../../phpstan.neon
+          configuration: phpstan.neon
           error_format: github-actions
