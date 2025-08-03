@@ -18,7 +18,7 @@ class CalculatorTest extends TestCase
     public function testAdd()
     {
         $result = $this->calculator->calculate(5.0, 3.0, "add");
-        $this->assertEquals("4", $result);
+        $this->assertEquals("8", $result);
     }
 
     /**
