@@ -3,7 +3,7 @@
 require __DIR__ . '/../../vendor/autoload.php';   
 
 class CalculationDB {
-    private Dotenv\Dotenv $dotenv;
+    private  $dotenv;
 
     public function __construct() {
         $this->dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../../');
