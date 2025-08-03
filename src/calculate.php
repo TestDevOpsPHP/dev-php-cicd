@@ -10,12 +10,12 @@ require_once 'class/calculationDB.php';
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     try {
         if (isset($_POST['num1']) && isset($_POST['num2']) && isset($_POST['operation'])) {
-            // 数値チェックを追加
-            if (!is_numeric($_POST['num1']) || !is_numeric($_POST['num2'])) {
-                echo "<h1>無効な数値です</h1>";
-                echo "<a href='index.php'>戻る</a>";
-                exit;
-            }
+            // // 数値チェックを追加
+            // if (!is_numeric($_POST['num1']) || !is_numeric($_POST['num2'])) {
+            //     echo "<h1>無効な数値です</h1>";
+            //     echo "<a href='index.php'>戻る</a>";
+            //     exit;
+            // }
             
             $num1 = (float)$_POST['num1'];
             $num2 = (float)$_POST['num2'];
