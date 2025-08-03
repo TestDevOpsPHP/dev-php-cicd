@@ -17,3 +17,5 @@ WORKDIR /var/www/html
 
 # プロジェクトのファイルをコンテナにコピー
 COPY . .
+
+RUN composer install
