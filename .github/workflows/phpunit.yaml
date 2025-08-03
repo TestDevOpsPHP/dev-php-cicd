@@ -21,4 +21,3 @@ jobs:
         php_version: 8.3
         path: tests/
         configuration: phpunit.xml
-        error_format: github
