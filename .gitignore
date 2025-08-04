@@ -1,0 +1,4 @@
+work/
+vendor/
+.env
+.phpunit.cache/
